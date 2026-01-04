@@ -1,11 +1,17 @@
-from google import genai
-from google.genai import types
-from dotenv import load_dotenv
+import os
 import json
+from google import genai
+from google.genai import types   # ✅ THIS LINE WAS MISSING
+from dotenv import load_dotenv
 
-load_dotenv()
 
-client = genai.Client()
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+if not GEMINI_API_KEY:
+    raise RuntimeError("GEMINI_API_KEY is not set")
+
+client = genai.Client(api_key=GEMINI_API_KEY)
+
 
 SYSTEM_PROMPT = """
 You are an AI financial assistant inside a fintech application.
